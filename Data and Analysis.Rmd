@@ -1,19 +1,87 @@
 ---
-title: "Data and Analysis"
+title: "STAT 5401 Data Analysis"
+author: "Dukuly, Mara, Elsway, Minah,..."
+date: "`r Sys.Date()`"
+geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
+fontsize: 12pt
 output: pdf_document
----
+filename: "STAT5401 Submit"
+--- 
+# -- find git ----------- #
+https://github.com/VemulaAnjali/STAT5401.git 
 
-Naming conventions
-PI police indicience 
-Years: 2015-2019
+# -- resources ----------- #
+<!-- R for DataScience: https://r4ds.had.co.nz/data-visualisation.html -->
+<!-- Rmarkdown guide: https://yihui.org/rmarkdown/  -->
+<!-- R GIS Package: https://gadm.org/maps.html#google_vignette -->
 
-# push data files into git shared 
 
-#GADM
-https://gadm.org/maps.html#google_vignette 
+# -- r setup ----------- #
 
-```{r}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.align  = "center",
+  fig.height = 5,
+  fig.width  = 7,
+  out.width  = "80%",
+  warning    = FALSE,
+  message    = FALSE,
+  include    = FALSE,
+  echo       = FALSE,
+  tidy       = TRUE,
+  tidy.opts  = list(width.cutoff = 70)
+)
+```
 
+# -- r setup: packages ----------- #
+
+```{r packages: install + load , include=FALSE}
+# FIRST list packages
+packages <- c(
+  "tidyverse", "usethis", "devtools",
+  "roxygen2", "here", "car", "ellipse", "formatR", "gadm"
+) # load everything
+
+# Define a function to check, install, and load the packages
+package.check <- lapply(
+  packages,
+  FUN = function(x) {
+    if (!require(x, character.only = TRUE, quietly = TRUE)) {
+      tryCatch(
+        install.packages(x, dependencies = TRUE, repos = "https://cloud.r-project.org"),
+        error = function(e) message(paste("Could not install:", x))
+      )
+    }
+    tryCatch(
+      library(x, character.only = TRUE),
+      error = function(e) message(paste("Could not load:", x, "-", conditionMessage(e)))
+    )
+  }
+)
+```
+
+# -- data ----------- #
+
+```{r data merge}
+# PI --> police incidence _ year
+Police_Incidents_2015$Year <- 2015
+Police_Incidents_2016$Year <- 2016
+Police_Incidents_2017$Year <- 2017
+Police_Incidents_2018$Year <- 2018
+Police_Incidents_2019$Year <- 2019
+
+# merge all, do not edit og dataset!
+police_inci_all <- bind_rows(
+  Police_Incidents_2015,
+  Police_Incidents_2016,
+  Police_Incidents_2017,
+  Police_Incidents_2018,
+  Police_Incidents_2019)
+```
+
+```{r data cleaning/ standardized}
 
 ```
+
+# -- data: LINE assumptions visualization----------- #
 
