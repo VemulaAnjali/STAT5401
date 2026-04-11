@@ -93,3 +93,18 @@ offenses_unclean <- bind_rows(
 
 # -- data: LINE assumptions visualization----------- #
 
+# 1. Add and commit your changes first
+git add .
+git commit -m "updated analysis"
+
+# 2. Now switch to main
+git checkout main
+
+# 3. Pull latest
+git pull origin main
+
+# 4. Merge Mara into main
+git merge Mara
+
+# 5. Push
+git push origin main
