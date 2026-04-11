@@ -7,10 +7,10 @@ fontsize: 12pt
 output: pdf_document
 filename: "STAT5401 Submit"
 --- 
-# -- find git ----------- #
+# -- git home ----------- #
 https://github.com/VemulaAnjali/STAT5401.git 
 
-# -- resources ----------- #
+<!-- # -- resources ----------- # -->
 <!-- R for DataScience: https://r4ds.had.co.nz/data-visualisation.html -->
 <!-- Rmarkdown guide: https://yihui.org/rmarkdown/  -->
 <!-- R GIS Package: https://gadm.org/maps.html#google_vignette -->
@@ -61,6 +61,14 @@ package.check <- lapply(
 ```
 
 # -- data ----------- #
+```{r data load}
+Police_Incidents_2015 <- read.csv("Police_Incidents_2015.csv")
+Police_Incidents_2016 <- read.csv("Police_Incidents_2016.csv")
+Police_Incidents_2017 <- read.csv("Police_Incidents_2017.csv")
+Police_Incidents_2018 <- read.csv("Police_Incidents_2018.csv")
+Police_Incidents_2019 <- read.csv("Police_Incidents_2019.csv")
+```
+
 
 ```{r data merge}
 # PI --> police incidence _ year
@@ -71,7 +79,7 @@ Police_Incidents_2018$Year <- 2018
 Police_Incidents_2019$Year <- 2019
 
 # merge all, do not edit og dataset!
-police_inci_all <- bind_rows(
+offenses_unclean <- bind_rows(
   Police_Incidents_2015,
   Police_Incidents_2016,
   Police_Incidents_2017,
@@ -85,3 +93,18 @@ police_inci_all <- bind_rows(
 
 # -- data: LINE assumptions visualization----------- #
 
+# 1. Add and commit your changes first
+git add .
+git commit -m "updated analysis"
+
+# 2. Now switch to main
+git checkout main
+
+# 3. Pull latest
+git pull origin main
+
+# 4. Merge Mara into main
+git merge Mara
+
+# 5. Push
+git push origin main
