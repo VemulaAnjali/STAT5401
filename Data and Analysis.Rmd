@@ -1,6 +1,6 @@
 ---
 title: "STAT 5401 Data Analysis"
-author: "Dukuly, Mara, Elsway, Minah,..."
+author: "Mara Dukuly, Minah Elsawy, Raghuram Gowrav Madduri, Anjali Vemula"
 date: "`r Sys.Date()`"
 geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
 fontsize: 12pt
@@ -15,7 +15,17 @@ https://github.com/VemulaAnjali/STAT5401.git
 <!-- Rmarkdown guide: https://yihui.org/rmarkdown/  -->
 <!-- R GIS Package: https://gadm.org/maps.html#google_vignette -->
 
+<!-- Mara Git Notes: replace "Mara" with your name aka branch --> 
+<!-- # 1. Add and commit your changes first -->
+<!-- git add . --> <!-- git commit -m "updated analysis" -->
 
+<!-- # 2. Now switch to main --> <!-- git checkout main -->
+
+<!-- # 3. Pull latest --> <!-- git pull origin main -->
+
+<!-- # 4. Merge Mara into main --> <!-- git merge Mara -->
+
+<!-- # 5. Push --> <!-- git push origin main -->
 # -- r setup ----------- #
 
 ```{r setup, include=FALSE}
@@ -26,7 +36,6 @@ knitr::opts_chunk$set(
   out.width  = "80%",
   warning    = FALSE,
   message    = FALSE,
-  include    = FALSE,
   echo       = FALSE,
   tidy       = TRUE,
   tidy.opts  = list(width.cutoff = 70)
@@ -69,6 +78,14 @@ Police_Incidents_2018 <- read.csv("Police_Incidents_2018.csv")
 Police_Incidents_2019 <- read.csv("Police_Incidents_2019.csv")
 ```
 
+```{r}
+names(Police_Incidents_2015)
+names(Police_Incidents_2016)
+names(Police_Incidents_2017)
+names(Police_Incidents_2018)
+names(Police_Incidents_2019) # seems to be different variables and measurements, we could try to standardize, I think we should drop and maybe grab 2014 if needed. 
+```
+
 
 ```{r data merge}
 # PI --> police incidence _ year
@@ -78,33 +95,28 @@ Police_Incidents_2017$Year <- 2017
 Police_Incidents_2018$Year <- 2018
 Police_Incidents_2019$Year <- 2019
 
+# objectid/ ESRI_OID is just the number of incidences per dataset, standardizing for merge
+Police_Incidents_2017 <- rename(Police_Incidents_2017,  ESRI_OID = `OBJECTID`)
+
+Police_Incidents_2018 <- rename(Police_Incidents_2018, ESRI_OID = `OBJECTID`)
 # merge all, do not edit og dataset!
-offenses_unclean <- bind_rows(
+police_incidents<- bind_rows(
   Police_Incidents_2015,
   Police_Incidents_2016,
-  Police_Incidents_2017,
-  Police_Incidents_2018,
-  Police_Incidents_2019)
+  Police_Incidents_2017, 
+  Police_Incidents_2018)
+```
+
+```{r data clean date/time}
+
 ```
 
 ```{r data cleaning/ standardized}
-
+unique(police_incidents$Neighborhood)
+unique(police_incidents$Description) # 12 types of theft, we could likely condese these, looting incl? 
+ 
 ```
 
 # -- data: LINE assumptions visualization----------- #
 
-# 1. Add and commit your changes first
-git add .
-git commit -m "updated analysis"
 
-# 2. Now switch to main
-git checkout main
-
-# 3. Pull latest
-git pull origin main
-
-# 4. Merge Mara into main
-git merge Mara
-
-# 5. Push
-git push origin main
